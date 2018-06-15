@@ -5,6 +5,7 @@ import EmailEditor from 'react-email-editor'
 import classes from './app.css';
 import axios from "axios";
 import alertify from "alertify.js";
+import PreviewHTML from "./components/PreviewHTML";
 
 
 class App extends Component {
@@ -58,24 +59,38 @@ class App extends Component {
 
       axios.post("/save", template)
         .then(response => {
-          this.setState(() => ({ status: `${templateType} Template was saved!` }));
-          alertify.success(this.state.status);
+          let status = { ...this.state.status };
+          status = `${templateType} Template was saved!`;
+          this.setState(() => ({ status }))
+          alertify.success(status);
         })
         .catch(error => {
-          this.setState(() => ({ status: `${templateType} Template was not saved!` }));
-          alertify.error(this.state.status);
+          let status = { ...this.state.status };
+          status = `${templateType ? templateType : ''} Template was not saved!`;
+          this.setState(() => ({ status }))
+          alertify.error(status);
         });
     });
   };
 
   previewHTML = () => {
-    if (this.state.template.html !== null) {
+    if (this.state.template.html !== '') {
+      let status = { ...this.state.status };
+      status = 'Template was sent to preview.';
+      this.setState(() => ({ status }))
+      alertify.success(status);
       const html = JSON.parse(JSON.stringify(this.state.template.html));
       const x = window.open("", "", "location=yes, menubar=yes, toolbar=yes, scrollbars=yes, resizable=yes, width=600, height=750");
       x.document.open();
       x.document.write(html);
       x.document.close();
+    } else {
+      let status = { ...this.state.status };
+      status = "HTML Template does not exist!";
+      this.setState(() => ({ status}))
+      alertify.error(status);
     }
+    
   };
 
   addSpaceBeforeUppercase = (str) => {
@@ -83,7 +98,9 @@ class App extends Component {
       if (str.charAt(i) === str.charAt(i).toUpperCase()) {
         // add a space before uppercase letter
         const newStr = str.replace(/([a-z])([A-Z])/g, "$1 $2");
-        this.setState(() => ({ status: `${newStr} template was received!` }));
+        let status = { ...this.state.status };
+        status = `${newStr} template was received!`;
+        this.setState(() => ({ status }))
         return newStr;
       }
     }
@@ -113,8 +130,10 @@ class App extends Component {
       })
       .catch(error => {
         const selectedOption = this.addSpaceBeforeUppercase(this.state.value);
-        this.setState(() => ({ status: `${selectedOption} template was not received! ` }));
-        alertify.error(this.state.status);
+        let status = { ...this.state.status };
+        status = `${selectedOption} template was not received! `;
+        this.setState(() => ({ status }));
+        alertify.error(status);
       });
   };
 
@@ -141,6 +160,7 @@ class App extends Component {
             <option value="">French</option>
           </select>
           <button onClick={this.previewHTML}>Preview</button>
+          {/* <PreviewHTML /> */}
         </div>
         <EmailEditor ref={editor => (this.editor = editor)} minHeight="650px" />
       </div>

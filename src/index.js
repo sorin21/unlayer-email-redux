@@ -6,10 +6,18 @@ import App from "./app";
 import appClass from "./app.css";
 import axios from "axios";
 import alertify from "alertify.js";
-
+import configureStore from "./store/configureStore";
+import {previewHtml} from "./actions/actionsTemplate";
 // const App = () => {
 //   return <div className={classes.App}> Hello Test React!!</div>
 // }
+
+const store = configureStore();
+
+store.dispatch(previewHtml("html ul meu"));
+const state = store.getState();
+
+console.log(state);
 
 alertify.logPosition("top right");
 
