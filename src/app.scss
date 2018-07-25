@@ -1,0 +1,56 @@
+$off-black: #20222b;
+$off-white: #a5afd7;
+$blue: #4169E1;
+$dark-blue: #333745;
+$light-blue: #464b5e;
+$purple: #8357c5;
+$gray: #eeeeee;
+$plain-white: #ffffff;
+
+$s-size: 1.2rem;
+$m-size: 1.6rem;
+$l-size: 3.2rem;
+$xl-size: 4.8rem;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  // font-size: 62.5%;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  // font-size: $m-size;
+}
+.container {
+  flex: 1;
+  background-color: $blue;
+  color: $plain-white;
+  padding: 10px;
+  display: flex;
+}
+h1 {
+  flex: 1;
+  font-size: 16px;
+  text-align: left;
+}
+button, select {
+  flex: 1;
+  padding: 10px;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #000;
+  color: $plain-white;
+  border: 0px;
+  max-width: 160px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover, select:hover {
+  color: lighten($purple, 10%);
+}
